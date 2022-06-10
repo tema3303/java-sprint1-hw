@@ -1,116 +1,109 @@
 public class StepTracker {
 
-    int stepdaygoal = 10000;
+    int stepDayGoal;
     MonthData[] monthToData;
     Converter converter = new Converter();
 
-
-    public StepTracker() {
+    public StepTracker(int stepDayGoal) {
+        this.stepDayGoal = stepDayGoal;
         monthToData = new MonthData[12];
+
         for (int i = 0; i < monthToData.length; i++) {
             monthToData[i] = new MonthData();
         }
     }
 
-    class MonthData {
-        int[] dayofmonth;
-
-        MonthData() {
-            dayofmonth = new int[30];
-            for (int i = 0; i < dayofmonth.length; i++) {
-            }
-        }
-    }
-
-
     int addStep(int month, int day, int step) {
         if (step < 0) {
             System.out.println("Ошибка! Вы ввели отрицательное значение!");
         } else {
-            monthToData[month].dayofmonth[day] = step;
+            monthToData[month].dayOfMonth[day] = step;
         }
-        return monthToData[month].dayofmonth[day];
-
+        return monthToData[month].dayOfMonth[day];
     }
 
-
     int findSumStep(int month) {
-        int sumofmonth = 0;
-        for (int i = 0; i < monthToData[month].dayofmonth.length; i++) {
-            sumofmonth += monthToData[month].dayofmonth[i];
+        int sumOfMonth = 0;
+        for (int i = 0; i < monthToData[month].dayOfMonth.length; i++) {
+            sumOfMonth += monthToData[month].dayOfMonth[i];
         }
-        return sumofmonth;
+        return sumOfMonth;
     }
 
     void printStat(int month) {
-
-        for (int i = 0; i < monthToData[month].dayofmonth.length; i++) {
-            System.out.println(i + " день: " + monthToData[month].dayofmonth[i] + "  ");
+        for (int i = 0; i < monthToData[month].dayOfMonth.length; i++) {
+            System.out.println(i + " день: " + monthToData[month].dayOfMonth[i] + "  ");
         }
     }
 
     int findMaxStep(int month) {
-        int maxstep = 0;
-        for (int i = 0; i < monthToData[month].dayofmonth.length; i++) {
-            if (monthToData[month].dayofmonth[i] > maxstep) {
-                maxstep = monthToData[month].dayofmonth[i];
+        int maxStep = 0;
+        for (int i = 0; i < monthToData[month].dayOfMonth.length; i++) {
+            if (monthToData[month].dayOfMonth[i] > maxStep) {
+                maxStep = monthToData[month].dayOfMonth[i];
             }
         }
-        return maxstep;
+        return maxStep;
     }
 
     int findAverageStep(int month) {
-        int count = 0;
         int sum = 0;
-        for (int i = 0; i < monthToData[month].dayofmonth.length; i++) {
-            sum += monthToData[month].dayofmonth[i];
-            count = i + 1;
+        for (int i = 0; i < monthToData[month].dayOfMonth.length; i++) {
+            sum += monthToData[month].dayOfMonth[i];
         }
-        return sum / count;
+        return sum / monthToData[month].dayOfMonth.length;
     }
 
-    int changeStepgoal(int stepdaygoalnew) {
-        if (stepdaygoalnew > 0) {
-            stepdaygoal = stepdaygoalnew;
+    int changeStepGoal(int stepDayGoalNew) {
+        if (stepDayGoalNew > 0) {
+            stepDayGoal = stepDayGoalNew;
         } else {
             System.out.println("Вы ввели отрицательное значение, целевое количество шагов остается неизмененным");
         }
-        return stepdaygoal;
+        return stepDayGoal;
     }
 
     double findDistance(int month) {
-        double sumofmonth = 0;
-        double distance = 0;
-        for (int i = 0; i < monthToData[month].dayofmonth.length; i++) {
-            sumofmonth += monthToData[month].dayofmonth[i];
-            distance = converter.convertDistance(sumofmonth);
+        double sumOfMonth = 0;
+        for (int i = 0; i < monthToData[month].dayOfMonth.length; i++) {
+            sumOfMonth += monthToData[month].dayOfMonth[i];
         }
-        return distance;
+        return converter.convertDistance(sumOfMonth);
     }
 
     double findCalories(int month) {
-        double sumofmonth = 0;
-        for (int i = 0; i < monthToData[month].dayofmonth.length; i++) {
-            sumofmonth += monthToData[month].dayofmonth[i];
+        double sumOfMonth = 0;
+        for (int i = 0; i < monthToData[month].dayOfMonth.length; i++) {
+            sumOfMonth += monthToData[month].dayOfMonth[i];
         }
-        return converter.convertCalories(sumofmonth);
+        return converter.convertCalories(sumOfMonth);
     }
 
     int findSeriesOfSteps(int month) {
         int count = 0;
-        int countmax = 0;
+        int countMax = 0;
 
-        for (int i = 0; i < monthToData[month].dayofmonth.length; i++) {
-            if (monthToData[month].dayofmonth[i] >= stepdaygoal) {
+        for (int i = 0; i < monthToData[month].dayOfMonth.length; i++) {
+            if (monthToData[month].dayOfMonth[i] >= stepDayGoal) {
                 count += 1;
             } else {
-                if(countmax < count) {
-                    countmax = count;
+                if(countMax < count) {
+                    countMax = count;
                     count = 0;
                 }
             }
         }
-        return countmax;
+        return countMax;
+    }
+
+    class MonthData {
+        int[] dayOfMonth;
+
+        MonthData() {
+            dayOfMonth = new int[30];
+            for (int i = 0; i < dayOfMonth.length; i++) {
+            }
+        }
     }
 }
 
