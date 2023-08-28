@@ -1,2 +1,2 @@
 # java-sprint1-hw
-First sprint homework
+Первая домашняя работа. Трекер шагов.
